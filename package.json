@@ -2,10 +2,18 @@
   "name": "backend",
   "version": "0.0.0",
   "private": true,
+  "main": "dist/main.js",
+  "engines": {
+    "node": "16.x"
+  },
+  "nodemonConfig": {
+    "ext": "ts",
+    "exec": "npm run build && npm start"
+  },
   "scripts": {
+    "start": "node .",
     "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node ./dist/main.js"
+    "dev": "nodemon"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
