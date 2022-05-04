@@ -2,8 +2,9 @@
  * Module dependencies.
  */
 
-import { app } from "./app";
 import http from "http";
+import { connect, connection } from "mongoose";
+import { app } from "./app";
 
 /**
  * Get port from environment and store in Express.
@@ -18,13 +19,23 @@ app.set("port", port);
 
 const server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// Connect to MongoDB
+connect(
+  `mongodb+srv://juhdanad:${process.env.DB_PASSWORD}@juhasz-prf-gyakorlat-fa.5h4tt.mongodb.net/falfestekbolt?retryWrites=true&w=majority`
+);
+connection.on("connected", () => {
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
 
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+  server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+});
+connection.on("error", (err) => {
+  console.error(`Mongoose connection error: ${err}`);
+  process.exit(1);
+});
 
 /**
  * Normalize a port into a number, string, or false.
