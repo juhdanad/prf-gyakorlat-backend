@@ -55,6 +55,7 @@ app.use(
     secret: process.env.COOKIE_SECRET || "alapjelszo",
     resave: false,
     saveUninitialized: false,
+    cookie: { sameSite: "strict", httpOnly: true },
   })
 );
 app.use(passport.session());
