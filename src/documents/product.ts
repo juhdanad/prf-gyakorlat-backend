@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 
 export interface IProduct {
-  displayName: string;
   name: string;
   description: string;
   imageURL: string;
@@ -11,7 +10,6 @@ export interface IProduct {
 
 const productSchema = new Schema<IProduct>(
   {
-    displayName: String,
     name: String,
     description: String,
     imageURL: String,

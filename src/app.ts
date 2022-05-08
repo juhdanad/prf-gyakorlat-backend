@@ -9,7 +9,7 @@ import path from "path";
 import { IUserLocal, User } from "./documents/user";
 import { router as indexRouter } from "./routes";
 import { router as loginRouter } from "./routes/login";
-import { router as usersRouter } from "./routes/users";
+import { router as productsRouter } from "./routes/products";
 
 passport.use(
   "local",
@@ -69,7 +69,7 @@ app.use("/api", function (req, res, next) {
 });
 
 app.use("/api", indexRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/products", productsRouter);
 
 app.use(function (_req, res) {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));

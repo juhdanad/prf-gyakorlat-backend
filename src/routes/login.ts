@@ -26,11 +26,21 @@ router.post("/login", (req, res) => {
   }
 });
 
+router.route("/currentUser").get((req, res) => {
+  return res
+    .status(200)
+    .send(
+      req.isAuthenticated()
+        ? { username: req.user.username, type: req.user.type }
+        : null
+    );
+});
+
 router.route("/logout").post((req, res) => {
   if (req.isAuthenticated()) {
     req.logout();
-    return res.status(200).send("Kijelentkezes sikeres");
+    return res.status(200).send({ message: "Kijelentkezes sikeres" });
   } else {
-    return res.status(403).send("Nem is volt bejelentkezve");
+    return res.status(403).send({ error: "Nem is volt bejelentkezve" });
   }
 });
