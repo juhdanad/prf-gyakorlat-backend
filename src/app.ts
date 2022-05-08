@@ -7,7 +7,8 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import path from "path";
 import { IUserLocal, User } from "./documents/user";
-import { router as indexRouter } from "./routes";
+import { router as ordersRouter } from "./routes/orders";
+import { router as shopRouter } from "./routes/shop";
 import { router as loginRouter } from "./routes/login";
 import { router as productsRouter } from "./routes/products";
 
@@ -68,8 +69,9 @@ app.use("/api", function (req, res, next) {
   else res.status(403).send("Nincs bejelentkezve!");
 });
 
-app.use("/api", indexRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/shop", shopRouter);
+app.use("/api/orders", ordersRouter);
 
 app.use(function (_req, res) {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));

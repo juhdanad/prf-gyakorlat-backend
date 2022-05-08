@@ -5,7 +5,7 @@
 import http from "http";
 import { connect, connection } from "mongoose";
 import { app } from "./app";
-import { initializeAdmin } from "./documents/user";
+import { initializeUsers } from "./documents/user";
 
 /**
  * Get port from environment and store in Express.
@@ -28,7 +28,7 @@ connection.on("connected", () => {
   /**
    * Listen on provided port, on all network interfaces.
    */
-  initializeAdmin();
+  initializeUsers();
   server.listen(port);
   server.on("error", onError);
   server.on("listening", onListening);

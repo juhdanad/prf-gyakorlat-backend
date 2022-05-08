@@ -21,17 +21,21 @@ const userSchema = new Schema<IUser>(
 
 export const User = model("user", userSchema);
 
-export async function initializeAdmin() {
-  User.updateOne(
-    { username: "juhdanad" },
-    {
-      $set: {
-        type: "admin",
-        hashedPassword: await hashPassword(process.env.ADMIN_PASSWORD || "asd"),
+export async function initializeUsers() {
+  const users = JSON.parse(process.env.USERS_TO_CREATE || "[]");
+  if (!Array.isArray(users)) return;
+  for (const user of users) {
+    User.updateOne(
+      { username: user.username },
+      {
+        $set: {
+          type: user.type,
+          hashedPassword: await hashPassword(user.password),
+        },
       },
-    },
-    { upsert: true }
-  ).exec();
+      { upsert: true }
+    ).exec();
+  }
 }
 
 async function hashPassword(password: string) {
